@@ -12,7 +12,8 @@ fn words() -> (String, String) {
 
 fn output(text: String) {
     // let kanji_only = remove_hiragana(text.clone()); // copyしろと暗に言っている気がした
-    let kanji_only = remove_hiragana(&text); // 参照を渡せばいい
+    // let kanji_only = remove_hiragana(&text); // 参照を渡せばいい? 所有権だけなのでだめそう
+    let (kanji_only, text) = remove_hiragana(text); // 所有権を戻す
     println!("{}", kanji_only);
     /*
     ゴール2：次の行をアンコメントすると何がおきるでしょうか？
@@ -30,9 +31,7 @@ fn output(text: String) {
     */
 }
 
-fn remove_hiragana(text: &String) -> String {
-    // 参照を渡せばいい
-
+fn remove_hiragana(text: String) -> (String, String) {
     /*
      ゴール1：コンパイルを通すには何を変更すれば良いでしょうか
     */
@@ -42,5 +41,5 @@ fn remove_hiragana(text: &String) -> String {
             result.push(c);
         };
     }
-    result
+    (result, text) // 所有権を戻す
 }
