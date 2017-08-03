@@ -10,11 +10,14 @@
 #![allow(dead_code)]
 
 fn main() {
-    println!("Hello, world!");
-    //greetings(name);
+    let name = String::from("everysick");
+    println!("{}", &name); // partial output
+    println!("{:?}", &name); // output with object format
+
+    //println!("Hello, {}!", name);
+    greetings(name);
 }
 
 fn greetings(name: String) {
     println!("Hello, {}!", name);
 }
-
