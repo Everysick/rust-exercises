@@ -8,11 +8,10 @@
 
 fn main() {
     let name = format!("dear rustaceans");
-    greet(name.clone());
-    greet(name);
+    greet(&name);
+    greet(&name[5..].to_string()); // ワンライナーできるのsliceしかわからん
 }
 
-fn greet(name: String) {
+fn greet(name: &String) {
     println!("Hello {}", name);
 }
-
