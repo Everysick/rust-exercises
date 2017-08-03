@@ -7,17 +7,18 @@
 */
 fn main() {
     let source = "hello, world".to_string();
+    let text = &source;
+
     {
-        let text = &source;
         p(text, "text")
     }
+
     p(text, text);
 
+    let source = "new source".to_string();
     let mut text;
     {
-        /* [1]
-        let source = "new source".to_string();
-        */
+
         p(&source, "&source");
         text = &source;
         p(text, "text");
