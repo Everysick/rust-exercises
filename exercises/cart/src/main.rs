@@ -27,28 +27,22 @@ fn main() {
     cart.take("orange", &catalog);
     cart.take("apple", &catalog);
 
-    for item in cart.list {
+    for item in &cart.list {
         println!("{} : {}円", item.name, item.price);
     }
 
     // [1]
-    /*
-    for item in cart.list {
-        println!("{}", item);
+    for item in &cart.list {
+        println!("{:?}", item);
     }
-    */
 
     // [2]
-    /*
     println!("total amount = {}", cart.total());
-    */
 
     // [3]
-    /*
     for (item, amount) in cart.histogram() {
         println!("{} : {}", item.name, amount);
     }
-    */
 }
 
 struct Cart {
@@ -66,14 +60,29 @@ impl Cart {
         }
     }
     fn total(&self) -> u32 {
-        self.list
-            .iter()
-            .map(|item| item.price)
-            .fold(0, |accm, item| accm + item)
+        self.list.iter().map(|item| item.price).fold(
+            0,
+            |accm, item| {
+                accm + item
+            },
+        )
+    }
+
+    fn histogram(&self) -> HashMap<Item, u32> {
+        let mut itemmap = HashMap::new();
+
+        for item in self.list.iter() {
+            match itemmap.get(item).cloned() {
+                Some(i) => itemmap.insert(item.clone(), i + 1),
+                None => itemmap.insert(item.clone(), 1),
+            };
+        }
+
+        itemmap
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 struct Item {
     name: String,
     price: u32,
